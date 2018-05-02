@@ -1,0 +1,68 @@
+html, body{
+    height: 100%;
+    overflow: hidden;
+}
+
+
+/* Canvas */
+#gamecanvas {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 525px;
+}
+
+/*Game Canvas Moving Elements*/
+#sky {
+    poistion: absolute;
+    top: 0;
+    width: 100%;
+    height: 80%;
+    background-image: url(../assets/sky.png);
+    background-position: 0px 100%;
+    background-repeat: repeat-x;
+    background-color: #4ec0ca;
+
+    animation: skyAnimation 15s linear infinite;
+}
+
+#skylimit {
+    position: absolute;
+    width: 100%;
+    top: 20%;
+    height: 15px;
+    background-image: url(../assets/ceiling.png);
+    background-repeat: repeat-x;
+
+    animation: skylimitAnimation 200ms linear infinite;
+}
+
+#land {
+    position: absolute;
+    bottom:0;
+    width: 100%;
+    height: 20%;
+    background-image: url(../assets/land.png);
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+    background-color: #ded895;
+
+    animation: landAnimation 3s linear infinite;
+}
+
+/* Keyframes Animations */
+
+@keyframes skyAnimation {
+    0% { background-position: 0px 100%; }
+    100% { background-position: -275px 100%; }
+}
+
+@keyframes skylimitAnimation {
+    0% { background-position: 0px 0px; }
+    100% { background-position: -63px 0px; }
+}
+
+@keyframes landAnimation {
+    0% { background-position: 0px 0px; }
+    100% { background-position: -335px 0px; }
+}

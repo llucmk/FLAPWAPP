@@ -1,8 +1,11 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <tittle></tittle>
+        <title> FLAPWAPP </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
         <link rel="stylesheet" href="css/style.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
     </head>
 
     <body>
@@ -10,9 +13,18 @@
             <div id="sky"></div>
             <div id="playspace">
                 <div id="skylimit"></div>
+                <div id="bird" class="bird"></div>
+                <!--<div class="pipe animated"><div class="pipe_upper" style="height: 118px;"></div><div class="pipe_lower" style="height:212px;"></div></div>-->
             </div>
             <div id="land"></div>
         </div>
+        <script>
+            if('serviceWorker' in navigator) {
+                navigator.serviceWorker
+                    .register('sw.js')
+                    .then(function() { console.log("Service Worker Registered"); });
+            }
+        </script>
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/main.js"></script>
     </body>

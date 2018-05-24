@@ -14,6 +14,13 @@ html, body{
     min-height: 525px;
 }
 
+#playspace {
+    position: absolute;
+    bottom: 135px;
+    height: 430px;
+    width: 100%;
+}
+
 /*Game Canvas Moving Elements*/
 #sky {
     poistion: absolute;
@@ -31,7 +38,7 @@ html, body{
 #skylimit {
     position: absolute;
     width: 100%;
-    top: 20%;
+    top: 0;
     height: 15px;
     background-image: url(../assets/ceiling.png);
     background-repeat: repeat-x;
@@ -55,7 +62,7 @@ html, body{
 /* Bird or Player */
 #bird{
     position: absolute;
-    top:320px;
+    top:180px;
     left: 50px;
     width: 34px;
     height: 24px;
@@ -64,20 +71,21 @@ html, body{
     animation: birdAnimation 350ms steps(4) infinite;
 }
 
-/*.pipe {
+.pipe {
     position: absolute;
     height: 100%;
     z-index: 5;
     width: 52px;
     left: -100px;
 
+    animation: pipeAnimation 7500ms linear;
 
 }
 
 .pipe_upper
 {
     position: absolute;
-    top: 0;
+    top: 15px;
     width: 52px;
     background-image: url('../assets/pipe.png');
     background-repeat: repeat-y;
@@ -112,7 +120,7 @@ html, body{
     width: 52px;
     height: 26px;
     background-image: url('../assets/pipe-up.png');
-}*/
+}
 
 /* Keyframes Animations */
 
@@ -124,6 +132,11 @@ html, body{
 @keyframes skyAnimation {
     0% { background-position: 0px 100%; }
     100% { background-position: -275px 100%; }
+}
+
+@keyframes pipeAnimation {
+    0% { left: 900px; }
+    100% { left: -100px; }
 }
 
 @keyframes skylimitAnimation {

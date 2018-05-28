@@ -15,7 +15,7 @@ var jump = 4;
 var gravity = -0.25;
 
 // Pipes
-var pipeheight = 90;
+var pipeheight = 125; // Separation between pipes
 var pipewidth = 52;
 var pipes =  new Array();
 
@@ -61,14 +61,12 @@ function updateBird(bird){
 
     //rotation
     angle = Math.min((lift / 10) * 90, 90);
-    console.log(position + " height & landLimit " + 405 );
 
     // if bird touches the ground, "stops". Here it should stop the game and let introduce the points on a nickname.
     if (position >= 405){
         $(bird).css({ transform: 'rotate(' + -angle + 'deg)' ,top: position });
         position = 405;
     } else {
-        // console.log("no problem");
         $(bird).css({ transform: 'rotate(' + -angle + 'deg)' ,top: position });
     }
 
@@ -79,7 +77,7 @@ function updatePipes() {
     $(".pipe").filter(function() { return $(this).position().left <= -100; }).remove();
 
     //adds a new pipe
-    var padding = 80;
+    var padding = 60;
     var constraint = airSpace - pipeheight - (padding * 2) ; // adds a padding to restrict spawn position.
 
     var topheight = Math.floor((Math.random()*constraint) + padding); //adds lower padding near ground

@@ -44,7 +44,7 @@ html, body{
 #skylimit {
     position: absolute;
     width: 100%;
-    top: -16px;
+    top: -15px;
     height: 15px;
     background-image: url(../assets/ceiling.png);
     background-repeat: repeat-x;
@@ -127,6 +127,18 @@ html, body{
     height: 26px;
     background-image: url('../assets/pipe-up.png');
 }
+
+/* debug*/
+.boundingbox
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border: 1px solid red;
+}
+
 
 /* Keyframes Animations */
 

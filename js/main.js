@@ -1,6 +1,3 @@
-
-
-
 // Variables
 
 var semaforo = false;
@@ -16,7 +13,7 @@ var gravity = -0.25;
 
 // Pipes
 var pipeheight = 90; // Separation between pipes
-var pipes =  new Array();
+var pipes = new Array();
 
 /* Variables for Game Framerate and loop updating */
 var gameEngine;
@@ -25,18 +22,17 @@ var gamePipes;
 // Events handlers
 
 //Activates action on touch or mousedown.
-if("ontouchstart" in window)
+if ("ontouchstart" in window)
     $(document).on("touchstart", screenClick);
 else
     $(document).on("mousedown", screenClick);
 
 
-
-function showSplash(){
+function showSplash() {
 
 }
 
-function startGame(){
+function startGame() {
 
     semaforo = true;
     var fps = 1000 / 45;  // This is 1 second divided in 45 frames
@@ -45,7 +41,7 @@ function startGame(){
 
 }
 
-function gameLoop(){
+function gameLoop() {
     var bird = $("#bird");
 
 
@@ -54,33 +50,42 @@ function gameLoop(){
 
     updateBird(bird);
 
+    var playSpaceDelimitation = document.getElementById("playspace").getBoundingClientRect();
     var playerHitBox = document.getElementById("bird").getBoundingClientRect();
 
-    var playerBoxtop = (playerHitBox.top + playerHitBox.width) / 2; // Gets the middle-top position of the bird.
-    var playerBoxbottom = (playerHitBox.bottom + playerHitBox.width) / 2; // Gets the middle-top position of the bird.
+    var playerBoxtop = playerHitBox.top - playSpaceDelimitation.top;
+    var playerBoxbottom = playerBoxtop + playerHitBox.height;
     var playerBoxleft = playerHitBox.left;
     var playerBoxright = playerHitBox.right;
 
-    // debug
-    var boundingbox = $("#playerbox");
-    boundingbox.css('left', playerBoxleft);
-    boundingbox.css('top', playerBoxtop);
-    boundingbox.css('height', playerHitBox.height);
-    boundingbox.css('width', playerHitBox.width);
+    // If player tries to escape from skylimit, limit position to 0.
+    if (playerHitBox.top <= playSpaceDelimitation.top){
+        position = 0;
+    }
 
-    // console.log(playerBoxright);
+    // If player touches the ground, dies.
+    if (playerHitBox.top >= (playSpaceDelimitation.top + playSpaceDelimitation.height)) {
+        playerDead();
+    }
 
+    // If any pipe spawns, execute this code.
     if (pipes[0] != null) {
         var lastPipeSel = pipes[0];
         var nextUpperPipe = lastPipeSel.children(".pipe_upper");
-        // nextUpperPipe.css({"background-color":"red"});
 
-        var pipetop = nextUpperPipe.offset().top + nextUpperPipe.height(); // Gets the top position of the upper pipe and adds the height of the pipe to get the left bottom corner coords
+
+        var pipetop = (nextUpperPipe.offset().top + nextUpperPipe.height()) - playSpaceDelimitation.top;
         var pipebottom = pipetop + pipeheight;
         var pipeleft = nextUpperPipe.offset().left - 2;
         var piperight = pipeleft + nextUpperPipe.width();
 
+
         // debug
+        var boundingbox = $("#playerbox");
+        boundingbox.css('left', playerBoxleft);
+        boundingbox.css('top', playerBoxtop);
+        boundingbox.css('height', playerHitBox.height);
+        boundingbox.css('width', playerHitBox.width);
 
         var boundingbox = $("#pipebox");
         boundingbox.css('left', pipeleft);
@@ -89,85 +94,52 @@ function gameLoop(){
         boundingbox.css('width', nextUpperPipe.width());
 
 
-
         // is the player inside the pipe on x position?
-        if(playerBoxright > pipeleft) {
+        if (playerBoxright > pipeleft) {
             // Is it passing between the top and bottom pipes?
-            if(nextUpperPipe.height() > pipetop) {
-                console.log(nextUpperPipe.height());
+            if (playerBoxtop > pipetop && playerBoxbottom < pipebottom) {
                 console.log("Bien!");
-                console.log(playerBoxtop);
             } else {
-                // The player touched the pipes
-                console.log(nextUpperPipe.height());
                 console.log("bad!");
-                console.log(playerBoxtop);
+
                 playerDead();
             }
         }
 
-        // console.log(playerBoxleft + "  > " + piperight);
-        if(playerBoxleft > piperight) {
+        if (playerBoxleft > piperight) {
             pipes.splice(0, 1);
         }
 
-
-        // console.log(nextUpperPipe.width());
-        // console.log(playerHitBox.x + "   " +nextpipe.offset().left);
-
-
-
-        // var upperPipeHbox = lastPipeSel.children(".pipe_upper");
-        // var upperboundingPipeHbox = lastPipeSel.children(".pipe_upper").getBoundingClientRect();
-        // var lowerPipeHbox = lastPipeSel.children(".pipe_lower").getBoundingClientRect();
-        //
-        // var pipetop = upperPipeHbox.offset().top + upperPipeHbox.height();
-        //
-        // // Debugging
-        // console.log("pipeptop: " + pipetop  + " <br /> upperboundingPipeHbox: " + upperboundingPipeHbox.top );
-        // console.log(playerHitBox.right);
-
-        }
-
-        // $(bird).css("background-color", "blue");
-
-        // lastPipeSel[0].style.backgroundColor = "red";
-        // lastPipeSel[0].children[1].style.backgroundColor = "red";
-        // console.log(lastPipeSel[0].children[1]);
-        // lastPipeSel.style.backgroundColor = "red";
-
-    // console.log(pipes);
-    // var upPipeHitBox = document.getElementById("pipe_upper").getBoundingClientRect();
-    // var lowPipeHitBox = document.getElementById("pipe_lower").getBoundingClientRect();
-    //  console.log(pipes);
-
+    }
 
 }
 
-function updateBird(bird){
+function updateBird(bird) {
 
     //rotation
     angle = Math.min((lift / 10) * 90, 90);
 
     // if bird touches the ground, "stops". Here it should stop the game and let introduce the points on a nickname.
-    if (position >= 405){
-        $(bird).css({ transform: 'rotate(' + -angle + 'deg)' ,top: position });
+    if (position >= 405) {
+        $(bird).css({transform: 'rotate(' + -angle + 'deg)', top: position});
         position = 405;
     } else {
-        $(bird).css({ transform: 'rotate(' + -angle + 'deg)' ,top: position });
+        $(bird).css({transform: 'rotate(' + -angle + 'deg)', top: position});
     }
 
 }
 
 function updatePipes() {
     // Remove any pipe that already passed left position by more than -70.
-    $(".pipe").filter(function() { return $(this).position().left <= -70; }).remove();
+    $(".pipe").filter(function () {
+        return $(this).position().left <= -70;
+    }).remove();
 
     //adds a new pipe
     var padding = 60;
-    var constraint = airSpace - pipeheight - (padding * 2) ; // adds a padding to restrict spawn position.
+    var constraint = airSpace - pipeheight - (padding * 2); // adds a padding to restrict spawn position.
 
-    var topheight = Math.floor((Math.random()*constraint) + padding); //adds lower padding near ground
+    var topheight = Math.floor((Math.random() * constraint) + padding); //adds lower padding near ground
 
     var bottomheight = (airSpace - pipeheight) - topheight;
 
@@ -176,10 +148,10 @@ function updatePipes() {
     pipes.push(newpipe);
 }
 
-function jumpBird(){
+function jumpBird() {
     lift = jump;
 
-    if(!semaforo){
+    if (!semaforo) {
         startGame();
     }
 }
@@ -188,14 +160,16 @@ function screenClick() {
     jumpBird();
 }
 
-function playerDead(){
+function playerDead() {
+
+    showScore();
 
 }
 
-function saveScore(){
-
+function saveScore() {
+    
 }
 
-function showScore(){
+function showScore() {
 
 }

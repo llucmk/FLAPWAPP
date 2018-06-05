@@ -11,6 +11,8 @@ var airSpace = $("#playspace").height();
 var jump = 4;
 var gravity = -0.25;
 
+var scorePoints = 0;
+
 // Pipes
 var pipeheight = 90; // Separation between pipes
 var pipes = new Array();
@@ -50,6 +52,7 @@ function gameLoop() {
 
     updateBird(bird);
 
+    var canvas = document.getElementById("gamecanvas").getBoundingClientRect();
     var playSpaceDelimitation = document.getElementById("playspace").getBoundingClientRect();
     var playerHitBox = document.getElementById("bird").getBoundingClientRect();
 
@@ -64,8 +67,9 @@ function gameLoop() {
     }
 
     // If player touches the ground, dies.
-    if (playerHitBox.top >= (playSpaceDelimitation.top + playSpaceDelimitation.height)) {
+    if (playerBoxbottom >= (playSpaceDelimitation.height)) {
         playerDead();
+
     }
 
     // If any pipe spawns, execute this code.
@@ -86,6 +90,14 @@ function gameLoop() {
         boundingbox.css('top', playerBoxtop);
         boundingbox.css('height', playerHitBox.height);
         boundingbox.css('width', playerHitBox.width);
+
+        // debug
+        var boundingbox = $("#playspacing");
+        boundingbox.css('left', playSpaceDelimitation.left);
+        boundingbox.css('top', 0);
+        boundingbox.css('height', playSpaceDelimitation.height);
+        boundingbox.css('width', playSpaceDelimitation.width);
+        boundingbox.css('z-index', 200);
 
         var boundingbox = $("#pipebox");
         boundingbox.css('left', pipeleft);
@@ -108,6 +120,8 @@ function gameLoop() {
 
         if (playerBoxleft > piperight) {
             pipes.splice(0, 1);
+            scorePoints += 1;
+            console.log(scorePoints);
         }
 
     }
@@ -143,7 +157,7 @@ function updatePipes() {
 
     var bottomheight = (airSpace - pipeheight) - topheight;
 
-    var newpipe = $('<div class="pipe animated"><div class="pipe_upper" style="height: ' + topheight + 'px;"></div><div class="pipe_lower" style="height: ' + bottomheight + 'px;"></div></div>');
+    var newpipe = $('<div class="pipe animate"><div class="pipe_upper" style="height: ' + topheight + 'px;"></div><div class="pipe_lower" style="height: ' + bottomheight + 'px;"></div></div>');
     $("#playspace").append(newpipe);
     pipes.push(newpipe);
 }
@@ -162,11 +176,35 @@ function screenClick() {
 
 function playerDead() {
 
+    // Stop animating everything.
+    $(".animate").css('animation-play-state', 'paused');
+
+    clearInterval(gameEngine);
+    clearInterval(gamePipes);
+    gameEngine = null;
+    gamePipes = null;
+
+    saveScore();
+
+
     showScore();
 
 }
 
+
 function saveScore() {
+
+    var name = prompt("Please, enter your name:");
+
+// Check browser support
+    if (typeof(Storage) !== "undefined") {
+        // Store
+        localStorage.setItem("name", name);
+        // Retrieve
+        console.log(localStorage.getItem("name"));
+    } else {
+        console.log("Sorry, your browser does not support Web Storage...");
+    }
     
 }
 

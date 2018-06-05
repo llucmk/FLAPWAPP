@@ -10,21 +10,22 @@
 
     <body>
         <div id="gamecanvas">
-            <div id="sky"></div>
+            <div id="sky" class="animate"></div>
                 <div id="playspace">
-                    <div id="skylimit"></div>
+                    <div id="skylimit" class="animate"></div>
                     <!-- // DEBUG //-->
                     <div class="boundingbox" id="playerbox"></div>
+                    <div class="boundingbox" id="playspacing"></div>
                     <div class="boundingbox" id="pipebox"></div>
                     <!-- // DEBUG [END] //-->
-                    <div id="bird" class="bird"></div>
+                    <div id="bird" class="bird animate"></div>
                 </div>
-                <div id="land"></div>
+                <div id="land" class="animate"></div>
         </div>
         <script>
             if('serviceWorker' in navigator) {
                 navigator.serviceWorker
-                    .register('sw.js')
+                    .register('/sw.js')
                     .then(function() { console.log("Service Worker Registered"); });
             }
         </script>

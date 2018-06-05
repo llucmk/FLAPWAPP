@@ -23,16 +23,11 @@
                 <div id="land" class="animate"></div>
         </div>
         <script>
-            // Register the service worker
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                    // Registration was successful
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }).catch(function(err) {
-                    // registration failed :(
-                    console.log('ServiceWorker registration failed: ', err);
-                });
+            // register ServiceWorker.
+            if (navigator.serviceWorker) {
+                navigator.serviceWorker.register('/{FLAPWAPP}/sw.js', {scope: '/{FLAPWAPP}/'})
             }
+
         </script>
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/main.js"></script>

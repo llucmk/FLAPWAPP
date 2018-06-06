@@ -1,11 +1,11 @@
 
 
-var APP_PREFIX = 'FLAPWAPP_'     // Identifier for this app (this needs to be consistent across every cache update)
-var VERSION = 'version_01'              // Version of the off-line cache (change this value everytime you want to update cache)
+var APP_PREFIX = 'FLAPWAPP_'     // Identifier for this app.
+var VERSION = 'version_02'              // Version of the off-line cache.
 var CACHE_NAME = APP_PREFIX + VERSION
-var URLS = [                            // Add URL you want to cache in this list.
-    '/FLAPWAPP/',                     // If you have separate JS/CSS files,
-    '/FLAPWAPP/index.html',           // add path to those files here.
+var URLS = [                            // An array with the all the files I want to get inside cache.
+    '/FLAPWAPP/',
+    '/FLAPWAPP/index.html',
     '/FLAPWAPP/favicon.ico',
     '/FLAPWAPP/css/style.css',
     '/FLAPWAPP/js/main.js',
@@ -13,6 +13,7 @@ var URLS = [                            // Add URL you want to cache in this lis
     '/FLAPWAPP/assets/flaprite.png',
     '/FLAPWAPP/assets/land.png',
     '/FLAPWAPP/assets/pipe.png',
+    '/FLAPWAPP/assets/pipe-up.png',
     '/FLAPWAPP/assets/pipe-down.png',
     '/FLAPWAPP/assets/sky.png'
 
@@ -24,10 +25,8 @@ self.addEventListener('fetch', function (e) {
     e.respondWith(
         caches.match(e.request).then(function (request) {
             if (request) { // if cache is available, respond with cache
-                console.log('responding with cache : ' + e.request.url)
                 return request
             } else {       // if there are no cache, try fetching request
-                console.log('file is not cached, fetching : ' + e.request.url)
                 return fetch(e.request)
             }
 

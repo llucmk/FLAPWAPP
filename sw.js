@@ -4,17 +4,17 @@ var APP_PREFIX = 'FLAPWAPP_'     // Identifier for this app (this needs to be co
 var VERSION = 'version_01'              // Version of the off-line cache (change this value everytime you want to update cache)
 var CACHE_NAME = APP_PREFIX + VERSION
 var URLS = [                            // Add URL you want to cache in this list.
-    '/{FLAPWAPP}/',                     // If you have separate JS/CSS files,
-    '/{FLAPWAPP}/index.html',           // add path to those files here.
-    '/{FLAPWAPP}/favicon.ico',
-    '/{FLAPWAPP}/css/style.css',
-    '/{FLAPWAPP}/js/main.js',
-    '/{FLAPWAPP}/js/jquery-3.3.1.min.js',
-    '/{FLAPWAPP}/assets/flaprite.png',
-    '/{FLAPWAPP}/assets/land.png',
-    '/{FLAPWAPP}/assets/pipe.png',
-    '/{FLAPWAPP}/assets/pipe-down.png',
-    '/{FLAPWAPP}/assets/sky.png'
+    '/FLAPWAPP/',                     // If you have separate JS/CSS files,
+    '/FLAPWAPP/index.html',           // add path to those files here.
+    '/FLAPWAPP/favicon.ico',
+    '/FLAPWAPP/css/style.css',
+    '/FLAPWAPP/js/main.js',
+    '/FLAPWAPP/js/jquery-3.3.1.min.js',
+    '/FLAPWAPP/assets/flaprite.png',
+    '/FLAPWAPP/assets/land.png',
+    '/FLAPWAPP/assets/pipe.png',
+    '/FLAPWAPP/assets/pipe-down.png',
+    '/FLAPWAPP/assets/sky.png'
 
 ]
 
@@ -39,8 +39,9 @@ self.addEventListener('fetch', function (e) {
 self.addEventListener('install', function (e) {
     e.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
-            console.log('installing cache : ' + CACHE_NAME)
-            return cache.addAll(URLS)
+            console.log('installing cache : ' + CACHE_NAME);
+            console.log(cache.addAll(URLS));
+            return cache.addAll(URLS);
         })
     )
 })

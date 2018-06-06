@@ -110,10 +110,8 @@ function gameLoop() {
         if (playerBoxright > pipeleft) {
             // Is it passing between the top and bottom pipes?
             if (playerBoxtop > pipetop && playerBoxbottom < pipebottom) {
-                console.log("Bien!");
+            //    Good
             } else {
-                console.log("bad!");
-
                 playerDead();
             }
         }
@@ -186,9 +184,6 @@ function playerDead() {
 
     saveScore();
 
-
-    showScore();
-
 }
 
 
@@ -215,6 +210,8 @@ function saveScore() {
         console.log("Sorry, your browser does not support Web Storage...");
     }
 
+    showScore();
+
 }
 
 function showScore() {
@@ -228,7 +225,9 @@ function showScore() {
     });
 
     for (var i = 0; i < 10; i++) {
-        $("#scores").append("<p>" + (i+1) + ". " + byScore[i].Name + " - " + byScore[i].Score + "</p>");
+        if (arrayzed[0].length > i) {
+            $("#scores").append("<p>" + (i + 1) + ". " + byScore[i].Name + " - " + byScore[i].Score + "</p>");
+        }
     }
 
 

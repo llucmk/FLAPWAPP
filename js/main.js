@@ -195,19 +195,45 @@ function playerDead() {
 function saveScore() {
 
     var name = prompt("Please, enter your name:");
+    var playerName_Score = { "Players":[{"Name":name, "Score":scorePoints}]};
 
 // Check browser support
     if (typeof(Storage) !== "undefined") {
-        // Store
-        localStorage.setItem("name", name);
-        // Retrieve
-        console.log(localStorage.getItem("name"));
+
+        if(localStorage.getItem("PlayerNS") == null) {
+            // Store
+            localStorage.setItem("PlayerNS", JSON.stringify(playerName_Score));
+        } else {
+            var retrievedObject = localStorage.getItem("PlayerNS");
+            var parsedOject = JSON.parse(retrievedObject);
+            localStorage.clear();
+            parsedOject["Players"].push({"Name":name, "Score":scorePoints});
+            localStorage.setItem("PlayerNS", JSON.stringify(parsedOject));
+        }
+
     } else {
         console.log("Sorry, your browser does not support Web Storage...");
     }
-    
+
 }
 
 function showScore() {
+    var PlayerHighScore = localStorage.getItem("PlayerNS");
+    var parsedObject = JSON.parse(PlayerHighScore);
+    var arrayzed = Object.values(parsedObject);
+
+    var byScore = arrayzed[0].slice(0);
+    byScore.sort(function (a, b) {
+        return b.Score - a.Score;
+    });
+
+    for (var i = 0; i < 10; i++) {
+        $("#scores").append("<p>" + (i+1) + ". " + byScore[i].Name + " - " + byScore[i].Score + "</p>");
+    }
+
+
+    $("#gamescore").css("display", "block");
+    $("#gamescore").css("z-index", "2000");
+    $("#gamescore").animate({opacity: "1"}, 1000);
 
 }

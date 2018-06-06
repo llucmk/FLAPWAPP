@@ -5,6 +5,9 @@ html, body{
     padding: 0;
 }
 
+/* Fonts */
+@font-face { font-family: Orange-kid; src: url("../fonts/orange_kid.ttf");}
+
 
 /* Canvas */
 #gamecanvas {
@@ -65,6 +68,41 @@ html, body{
     animation: landAnimation 3s linear infinite;
 }
 
+/* Score */
+#gamescore {
+    position: relative;
+    display: none;
+    opacity: 0;
+    width: 100%;
+}
+
+#scorecontainer{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    margin-left: -133px;
+    height: auto;
+    z-index: 120;
+}
+
+#scorecontainer img{
+    position: absolute;
+}
+
+#gamescore #scores {
+    position: absolute;
+    z-index: 120;
+    margin-left: 50px;
+    text-align: left;
+    margin-top: 90px;
+    line-height: 0.1;
+}
+
+#gamescore #scores p {
+    font-family: Orange-kid;
+}
+
 /* Bird or Player */
 #bird{
     position: absolute;
@@ -72,6 +110,7 @@ html, body{
     left: 50px;
     width: 34px;
     height: 24px;
+    z-index: 100;
     background-image: url('../assets/flaprite.png');
 
     animation: birdAnimation 350ms steps(4) infinite;

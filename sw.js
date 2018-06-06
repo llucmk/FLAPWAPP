@@ -7,6 +7,7 @@ var URLS = [                            // An array with the all the files I wan
     '/FLAPWAPP/',
     '/FLAPWAPP/index.html',
     '/FLAPWAPP/favicon.ico',
+    '/FLAPWAPP/fonts/orange_kid.ttf',
     '/FLAPWAPP/css/style.css',
     '/FLAPWAPP/js/main.js',
     '/FLAPWAPP/js/jquery-3.3.1.min.js',
@@ -15,6 +16,7 @@ var URLS = [                            // An array with the all the files I wan
     '/FLAPWAPP/assets/pipe.png',
     '/FLAPWAPP/assets/pipe-up.png',
     '/FLAPWAPP/assets/pipe-down.png',
+    '/FLAPWAPP/assets/score-panel.png',
     '/FLAPWAPP/assets/sky.png'
 
 ]

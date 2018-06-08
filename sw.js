@@ -17,6 +17,7 @@ var URLS = [                            // An array with the all the files I wan
     '/FLAPWAPP/assets/pipe-up.png',
     '/FLAPWAPP/assets/pipe-down.png',
     '/FLAPWAPP/assets/score-panel.png',
+    '/FLAPWAPP/assets/replay.png',
     '/FLAPWAPP/assets/sky.png'
 
 ]
@@ -41,7 +42,6 @@ self.addEventListener('install', function (e) {
     e.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
             console.log('installing cache : ' + CACHE_NAME);
-            console.log(cache.addAll(URLS));
             return cache.addAll(URLS);
         })
     )

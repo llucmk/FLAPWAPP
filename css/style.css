@@ -90,12 +90,22 @@ html, body{
     position: absolute;
 }
 
+#scorecontainer button{
+    border: none;
+    background-color: rgba(0,0,0,0);
+}
+
+#replay{
+    top: 220px;
+    right: 70px;
+}
+
 #gamescore #scores {
     position: absolute;
     z-index: 120;
-    margin-left: 50px;
+    margin-left: 40px;
     text-align: left;
-    margin-top: 90px;
+    margin-top: 75px;
     line-height: 0.1;
 }
 

@@ -3,19 +3,19 @@
 var semaforo = false;
 
 
-var lift = 0;
-var angle = 0;
-var position = 180;
-var airSpace = $("#playspace").height();
+var lift = 0; // This will be the variable that controls the lift of the player.
+var angle = 0;  // Angle of player depending if flies or falls.
+var position = 180; // Start position of game.
+var airSpace = $("#playspace").height();  // Holds the height value of the entire playspace.
 
-var jump = 4;
-var gravity = -0.25;
+var jump = 4; // Power of a jump.
+var gravity = -0.25; // Gravity
 
-var scorePoints = 0;
+var scorePoints = 0;  // points scored
 
 // Pipes
 var pipeheight = 90; // Separation between pipes
-var pipes = new Array();
+var pipes = new Array(); // Contains all the pipes spawned.
 
 /* Variables for Game Framerate and loop updating */
 var gameEngine;
@@ -24,15 +24,12 @@ var gamePipes;
 // Events handlers
 
 //Activates action on touch or mousedown.
-if ("ontouchstart" in window)
+if ("ontouchstart" in window) {
     $(document).on("touchstart", screenClick);
-else
+}else {
     $(document).on("mousedown", screenClick);
-
-
-function showSplash() {
-
 }
+
 
 function startGame() {
 
@@ -46,16 +43,19 @@ function startGame() {
 function gameLoop() {
     var bird = $("#bird");
 
-
+    // lift is affected by gravity
     lift += gravity;
+    // then position is affected by lift
     position -= lift;
 
+    // updates the angle of bird
     updateBird(bird);
 
-    var canvas = document.getElementById("gamecanvas").getBoundingClientRect();
+    // Delimitations
     var playSpaceDelimitation = document.getElementById("playspace").getBoundingClientRect();
     var playerHitBox = document.getElementById("bird").getBoundingClientRect();
 
+    // Player delimitations
     var playerBoxtop = playerHitBox.top - playSpaceDelimitation.top;
     var playerBoxbottom = playerBoxtop + playerHitBox.height;
     var playerBoxleft = playerHitBox.left;
@@ -69,7 +69,10 @@ function gameLoop() {
     // If player touches the ground, dies.
     if (playerBoxbottom >= (playSpaceDelimitation.height)) {
         playerDead();
+    }
 
+    if ($("#scorecounter").children().html() != scorePoints) {
+        $("#scorecounter").children().html(scorePoints);
     }
 
     // If any pipe spawns, execute this code.
@@ -78,6 +81,7 @@ function gameLoop() {
         var nextUpperPipe = lastPipeSel.children(".pipe_upper");
 
 
+        // Pipes deilimitations
         var pipetop = (nextUpperPipe.offset().top + nextUpperPipe.height()) - playSpaceDelimitation.top;
         var pipebottom = pipetop + pipeheight;
         var pipeleft = nextUpperPipe.offset().left - 2;
@@ -91,13 +95,6 @@ function gameLoop() {
         boundingbox.css('height', playerHitBox.height);
         boundingbox.css('width', playerHitBox.width);
 
-        // debug
-        var boundingbox = $("#playspacing");
-        boundingbox.css('left', playSpaceDelimitation.left);
-        boundingbox.css('top', 0);
-        boundingbox.css('height', playSpaceDelimitation.height);
-        boundingbox.css('width', playSpaceDelimitation.width);
-        boundingbox.css('z-index', 200);
 
         var boundingbox = $("#pipebox");
         boundingbox.css('left', pipeleft);
@@ -119,7 +116,6 @@ function gameLoop() {
         if (playerBoxleft > piperight) {
             pipes.splice(0, 1);
             scorePoints += 1;
-            console.log(scorePoints);
         }
 
     }
@@ -177,6 +173,7 @@ function playerDead() {
     // Stop animating everything.
     $(".animate").css('animation-play-state', 'paused');
 
+    // Clear the intervals and freezes the game.
     clearInterval(gameEngine);
     clearInterval(gamePipes);
     gameEngine = null;
@@ -188,6 +185,7 @@ function playerDead() {
 
 
 function saveScore() {
+
 
     var name = prompt("Please, enter your name:");
     var playerName_Score = { "Players":[{"Name":name, "Score":scorePoints}]};

@@ -103,6 +103,19 @@ html, body{
     font-family: Orange-kid;
 }
 
+#scorecounter {
+    position: absolute;
+    z-index: 200;
+    margin: 13%;
+}
+
+#scorecounter p {
+    font-family: Orange-Kid;
+    font-size: 70px;
+    color: Yellow;
+
+}
+
 /* Bird or Player */
 #bird{
     position: absolute;

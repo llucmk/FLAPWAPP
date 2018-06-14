@@ -56,10 +56,10 @@ function gameLoop() {
     var playerHitBox = document.getElementById("bird").getBoundingClientRect();
 
     // Player delimitations
-    var playerBoxtop = playerHitBox.top - playSpaceDelimitation.top;
-    var playerBoxbottom = playerBoxtop + playerHitBox.height;
-    var playerBoxleft = playerHitBox.left;
-    var playerBoxright = playerHitBox.right;
+    var playerBoxtop = playerHitBox.top - playSpaceDelimitation.top + 7;
+    var playerBoxbottom = playerBoxtop + playerHitBox.height - 13;
+    var playerBoxleft = playerHitBox.left + 5;
+    var playerBoxright = playerHitBox.right - 10;
 
     // If player tries to escape from skylimit, limit position to 0.
     if (playerHitBox.top <= playSpaceDelimitation.top){
